@@ -20,25 +20,27 @@ CFLAGS		= -Wall -Werror -Wextra
 ################################################################################
 ## SOURCES
 
-SRCS		= ft_printf.c \
-		  print.c \
+SRCS		= ft_printf.c print.c
+
+OBJS		= ft_printf.o print.o
 
 ################################################################################
 ## REGLES
 
 all: $(NAME)
 
-$(NAME): ft_printf.o print.o
-	$(CC) $(CFLAGS) -o $(NAME) ft_printf.o print.o
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-ft_printf.o: ft_printf.c ft_printf.h
-	$(CC) $(CFLAGS) ft_printf.c
-
-print.o: print.c ft_printf.h print.h
-	$(CC) $(CFLAGS) print.c
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm $(NAME) ft_printf.o print.o
+	rm -f *.o
 
-fclean:
+fclean: clean
 	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
