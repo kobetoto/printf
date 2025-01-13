@@ -20,9 +20,14 @@ CFLAGS		= -Wall -Werror -Wextra
 ################################################################################
 ## SOURCES
 
-SRCS		= ft_printf.c print.c
+SRCS		= ft_printf.c \
+				ft_putchar.c\
+				print.c\
+				ft_putstr\
+				ft_putnbr\
 
-OBJS		= ft_printf.o print.o
+
+OBJS		= ft_printf.o print.o ft_putchar.o ft_putstr.o ft_putnbr.o
 
 ################################################################################
 ## REGLES
