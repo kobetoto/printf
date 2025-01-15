@@ -6,7 +6,7 @@
 #    By: thodavid <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 12:47:10 by thodavid          #+#    #+#              #
-#    Updated: 2025/01/14 14:27:35 by thodavid         ###   ########.fr        #
+#    Updated: 2025/01/15 13:46:37 by thodavid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 ################################################################################
@@ -25,9 +25,11 @@ SRCS		= ft_printf.c \
 			ft_putnbr\
 			ft_unsputnbr\
 			ft_puthexa\
+			ft_puthexaupp.c\
+			ft_putadress.c\
 
 
-OBJS		= ft_printf.o ft_putchar.o ft_putstr.o ft_putnbr.o ft_unsputnbr.o ft_puthexa.o
+OBJS		= ft_printf.o ft_putchar.o ft_putstr.o ft_putnbr.o ft_unsputnbr.o ft_puthexa.o ft_puthexaupp.o ft_putadress.o
 
 ################################################################################
 ## REGLES
