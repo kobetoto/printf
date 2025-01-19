@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 10:32:46 by thodavid          #+#    #+#             */
-/*   Updated: 2025/01/15 13:58:25 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:02:11 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -14,66 +14,92 @@
    void va_start(va_list ap, last);
    type va_arg(va_list ap, type);
    void va_end(va_list ap);
-*/
+   */
 
 static size_t	ft_putarg(const char *c, size_t *i, va_list *ap)
 {
 	*i = *i + 1;
 	if (*(c + 1) == 'c')
-		return (ft_putchar((const char) va_arg(*ap, int)));
+		return (ft_putchar((unsigned char) va_arg(*ap, int)));
 	else if (*(c + 1) == 's')
 		return (ft_putstr(va_arg(*ap, const char *)));
 	else if (*(c + 1) == 'p')
 		return (ft_putadress(va_arg(*ap, void *)));
-	else if (*(c + 1) == 'd')
-		return (ft_putnbr(va_arg(*ap, const int)));
-	else if (*(c + 1) == 'i')
-		return (ft_putnbr(va_arg(*ap, const int)));
+	else if (*(c + 1) == 'd' || *(c + 1) == 'i')
+		return (ft_putnbr(va_arg(*ap, int)));
 	else if (*(c + 1) == 'u')
-		return (ft_unsputnbr(va_arg(*ap, const unsigned int)));
+		return (ft_unsputnbr(va_arg(*ap, unsigned int)));
 	else if (*(c + 1) == 'x')
-		return (ft_puthexa(va_arg(*ap, const unsigned int)));
+		return (ft_puthexa(va_arg(*ap, unsigned int)));
 	else if (*(c + 1) == 'X')
-		return (ft_puthexaupp(va_arg(*ap, const unsigned int)));
+		return (ft_puthexaupp(va_arg(*ap, unsigned int)));
 	else if (*(c + 1) == '%')
 		return (ft_putchar('%'));
+	else if (*(c + 1) && *(c + 2))
+		return (ft_putchar(*(c)) + ft_putchar(*(c + 1)));
 	else
+	{
+		*i -= 1;
 		return (-1);
+	}
 }
 
 int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
 	size_t	i;
-	int		char_print;
+	int		len;
+	int		tmp;
 
 	if (!str)
 		return (-1);
-	i = 0;
-	char_print = 0;
+	len = 0;
 	va_start(ap, str);
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
-			char_print = ft_putarg(str + i, &i, &ap);
+			tmp = ft_putarg(str + i, &i, &ap);
 		else
-			char_print = ft_putchar(str[i]);
+			tmp = ft_putchar(str[i]);
+		if (tmp >= 0)
+			len += tmp;
+		else
+			len = tmp;
 		i++;
 	}
 	va_end(ap);
-	return (char_print);
+	return (len);
 }
+
 /*
 int main(int argc, char **argv)
 {
 	(void) argc;
 	(void) argv;
+	   char	*name = "Kobeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+	   char	*name2 = "gigi";
+	   char 	*s = NULL;
+	int	i = printf("%c",'0'); 
+	int	y = ft_printf("%c", '0'); 
 
+	//return
+	printf("\nprintf return is ==%i==  &  ft_printf return is ==%i==\n",i ,y);
+	//TEST0
+	printf("\n\n======\nTEST0:: %%c\n======\n");
 
-	char	*name = "Kobe";
-	char	*name2 = "gigi";
-	char 	*s = NULL;
+	printf("printf       ---->       ");
+	printf("===");
+	printf(" %c %c %c ",'1' , '2', '3');
+	printf("===");
 
+	printf("\n");
+
+	printf("MY ft_printf ---->       ");
+	printf("===");
+	fflush(stdout);
+	ft_printf(" %c %c %c ",'1' , '2', '3');
+	printf("===");
 	//TEST1
 	printf("\n\n======\nTEST1:: string\n======\n");
 
@@ -141,17 +167,17 @@ int main(int argc, char **argv)
 	printf("===\n");
 
 	printf("printf is    ---->       ");
-        printf("===");
-        printf("%s", s);
-        printf("===");
+	printf("===");
+	printf("%s", s);
+	printf("===");
 
-        printf("\n");
+	printf("\n");
 
-        printf("ft_printf is ---->       ");
-        printf("===");
-        fflush(stdout);
-        ft_printf("%s", s);
-        printf("===");
+	printf("ft_printf is ---->       ");
+	printf("===");
+	fflush(stdout);
+	ft_printf("%s", s);
+	printf("===");
 
 
 	//TEST5
@@ -333,19 +359,18 @@ int main(int argc, char **argv)
 
 
 	printf("printf is    ---->       ");
-        printf("===");
-        printf("%p", NULL);
-        printf("===");
+	printf("===");
+	printf("%p", NULL);
+	printf("===");
 
-        printf("\n");
+	printf("\n");
 
-        printf("ft_printf is ---->       ");
-        printf("===");
-        fflush(stdout);
-        ft_printf("%p", NULL);
-        printf("===");
-        printf("\n");
-
+	printf("ft_printf is ---->       ");
+	printf("===");
+	fflush(stdout);
+	ft_printf("%p", NULL);
+	printf("===");
+	printf("\n");
 	return 0;
 }
 */
