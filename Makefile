@@ -6,13 +6,13 @@
 #    By: thodavid <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 12:47:10 by thodavid          #+#    #+#              #
-#    Updated: 2025/01/15 13:46:37 by thodavid         ###   ########.fr        #
+#    Updated: 2025/01/19 12:30:15 by thodavid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 ################################################################################
 ## ARGUMENTS / VARIABLES
 
-NAME		= exe
+NAME		= libftprintf.a
 CC		= cc
 CFLAGS		= -Wall -Werror -Wextra
 
@@ -21,15 +21,14 @@ CFLAGS		= -Wall -Werror -Wextra
 
 SRCS		= ft_printf.c \
 			ft_putchar.c\
-			ft_putstr\
-			ft_putnbr\
-			ft_unsputnbr\
-			ft_puthexa\
+			ft_putstr.c\
+			ft_putnbr.c\
+			ft_unsputnbr.c\
+			ft_puthexa.c\
 			ft_puthexaupp.c\
 			ft_putadress.c\
 
-
-OBJS		= ft_printf.o ft_putchar.o ft_putstr.o ft_putnbr.o ft_unsputnbr.o ft_puthexa.o ft_puthexaupp.o ft_putadress.o
+OBJS		= $(SRCS:.c=.o)
 
 ################################################################################
 ## REGLES
@@ -37,7 +36,7 @@ OBJS		= ft_printf.o ft_putchar.o ft_putstr.o ft_putnbr.o ft_unsputnbr.o ft_puthe
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
