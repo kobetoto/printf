@@ -9,22 +9,17 @@
 /*   Updated: 2025/01/14 14:33:06 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
-
 size_t ft_puthexa(const unsigned int nb)
 {
-        size_t i;
+    size_t i = 0;
 
-        i = 0;
-        if (nb / 16)
-        {
-                ft_putnbr(nb / 16);
-                ft_putnbr(nb % 16);
-        }
-        else
-        {
-                ft_putchar(nb - 10 + 'a');
-                i++;
-        }
-	return i;
+    if (nb / 16) // Si nb >= 16, on continue la division
+        i += ft_puthexa(nb / 16);
+
+    if ((nb % 16) < 10) // Chiffres 0-9
+        i += ft_putchar((nb % 16) + '0');
+    else // Lettres a-f
+        i += ft_putchar((nb % 16) - 10 + 'a');
+
+    return i;
 }
